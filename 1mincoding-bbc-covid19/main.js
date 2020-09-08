@@ -1,6 +1,28 @@
 // 전역 변수 회피를 하기 위해 즉시실행 익명함수를 만듬
 // 즉 변수를 보호하기 위함
 (() => {
+
+    const actions = {
+        birdFlies(key) {
+            // 부모의 인덱스를 이용해서 셀렉팅함
+            // transform은 x축, y축으로 효과를 줄 수 있는데, 윈도우 창의 너비 픽셀 만큼 x축으로 이동하게함
+            if (key) {
+                document.querySelector('[data-index="2"] .bird').style.transform = `translateX(${window.innerWidth}px)`;
+            } else {
+                document.querySelector('[data-index="2"] .bird').style.transform = `translateX(-100%)`;
+            }
+        },
+        birdFlies2(key) {
+            if (key) {
+                document.querySelector('[data-index="5"] .bird').style.transform = `translate(${window.innerWidth}px, ${-window.innerHeight * 0.7}px)`;
+            } else {
+                document.querySelector('[data-index="5"] .bird').style.transform = `translateX(-100%)`;
+            }
+        }
+    }
+
+
+
     const stepElems = document.querySelectorAll('.step');
     const graphicElems = document.querySelectorAll('.graphic-item');
     let currentItem = graphicElems[0]; // 현재 활성화된(visible 클래스가 붙은) .graphic-item을 지정
@@ -21,16 +43,20 @@
         graphicElems[i].dataset.index = i;
     }
 
-    // visible 클래스 붙여주기
-    function activate() {
+    function activate(action) {
         currentItem.classList.add('visible');
+        if (action) { // 여기서 괄호 안에 들어올 action은 birdFlies라는 문자열일 뿐
+            actions[action](true); // 객체 메소드를 호출할 때 일반적으로 .을 사용하지만, action에 뭐가 들어올지 모르는 해당 프로퍼티 이름으로 적용하기 위해 [] 사용
+            // 그래서 action에 birdFlies가 들어오면 actions의 birdFlies 메소드를 호출하는 것!
+        }
     }
 
-    // visible 클래스 제거하기
-    function inactivate() {
+    function inactivate(action) {
         currentItem.classList.remove('visible');
+        if (action) {
+            actions[action](false); // 활성화 할 때는 key에 true를 넣어서 호출해주고, 비활성화 할 때는 key에 false를 넣어서 호출
+        }
     }
-
 
     window.addEventListener('scroll', () => {
         let step;
@@ -49,9 +75,13 @@
 
                 inactivate();
                 currentItem = graphicElems[step.dataset.index]; // step.dataset.index : 말풍선의 인덱스가 출력됨
-                activate();
+                activate(currentItem.dataset.action); // 예를 들면 인덱스 2일 때 괄호에 birdFlies라는 action이 들어갈 것.
             }
         }
+    });
+
+    window.addEventListener('load', () => {
+        setTimeout(() => scrollTo(0, 0), 100);
     });
 
     activate(); // 함수를 따로 만들어 실행해줌으로써 로드했을 때 graphicElems[0]가 담긴 currentItem에 visible을 지정하는 코드를 쓰지 않아도 됨
