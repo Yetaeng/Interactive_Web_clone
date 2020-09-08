@@ -1,0 +1,87 @@
+html {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+	margin: 0;
+}
+
+div,
+section,
+header,
+footer,
+p,
+h1,
+h2 {
+	box-sizing: border-box;
+	/* 내부 패딩이나 보더가 너비, 높이에 포함되게함 */
+}
+
+a {
+	color: royalblue;
+}
+
+img {
+	max-width: 100%;
+	/* 반응형으로 잘 동작하게 + 컨테이너가 이미지보다 줄어들었을 때 같이 줄어들 수 있게 */
+	height: auto;
+}
+
+.global-width {
+	max-width: 620px;
+	/* 모바일에서는 너무 줄어들면 안되니까 */
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.scroll-graphic {
+	position: sticky;
+	/* 스크롤을 내리다가 이미지가 브라우저 위쪽에 붙으면 딱 고정되어짐 -> 스티키 */
+	top: 0;
+	/* sticky가 적용된 요소의 위치가 top에 지정한 위치가 되면 그때부터 안올라가고 붙어있게됨 */
+	height: 100vh;
+	/* sticky가 적용되면 높이를 차지하고 있지 않아서 따로 지정해줘야함 */
+}
+
+.graphic-item {
+	/* 이미지 크기에 상관없이 화면에 꽉 차고, 가운데 정렬함 */
+	display: flex;
+	align-items: center;
+	/* 세로 방향 */
+	justify-content: center;
+	/* 가로 방향 */
+	/* 말풍선 음영효과 */
+	position: absolute;
+	left: 0;
+	top: 0;
+	/* 꽉 차게 */
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: 0.5s;
+	/* 이미지를 부드럽게 나타내기 위한 애니메이션 효과 */
+}
+
+.visible {
+	opacity: 1;
+}
+
+.scene-img {
+	max-height: 100vh;
+}
+
+.scroll-text {
+	position: relative;
+	/* 기본 값이 아니면 z-index를 가지고 있으므로 따로 안주면 아래있는게 위로 올라옴 
+	그래서 말풍선이 더 아래 쪽에 작성되어있기 때문에 그림 위로 올라올 수 있는 것 */
+}
+
+.step {
+	margin-bottom: 60vh;
+	/* vh는 브라우저 창을 기준으로함 그래서 60vh는 창 사이즈의 60%를 말함 */
+	padding: 0.5rem 1rem;
+	/* px로 해도 무방 */
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
+}
