@@ -73,7 +73,7 @@
             if (boundingRect.top > window.innerHeight * 0.1 &&
                 boundingRect.top < window.innerHeight * 0.8) {
 
-                inactivate();
+                inactivate(currentItem.dataset.action);
                 currentItem = graphicElems[step.dataset.index]; // step.dataset.index : 말풍선의 인덱스가 출력됨
                 activate(currentItem.dataset.action); // 예를 들면 인덱스 2일 때 괄호에 birdFlies라는 action이 들어갈 것.
             }
